@@ -6,7 +6,7 @@ Serverless Stack Auth Cognito OAuth React Demo
 
 ## Setup
 
-Create `.env` file containing Google App credentials:
+Create an `.env` file containing Google App credentials:
 
 ```
 GOOGLE_CLIENT_ID=<xxxxx>
@@ -15,11 +15,11 @@ GOOGLE_CLIENT_SECRET=<xxxxxx>
 
 ## Deploy
 
-AWS_PROFILE=<PROFILE> npx sst --stage <STAGE> start
+AWS_PROFILE=<PROFILE> npx sst start --stage <STAGE>
 
 ## Remove
 
-AWS_PROFILE=<PROFILE> npx sst --stage <STAGE> remove
+AWS_PROFILE=<PROFILE> npx sst remove --stage <STAGE>
 
 ## Usage
 
