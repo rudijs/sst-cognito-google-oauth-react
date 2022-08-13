@@ -1,5 +1,5 @@
-import { MyStack } from "./MyStack";
-import { App } from "@serverless-stack/resources";
+import { MyStack } from "./MyStack"
+import { App } from "@serverless-stack/resources"
 
 export default function (app: App) {
   app.setDefaultFunctionProps({
@@ -8,6 +8,9 @@ export default function (app: App) {
     bundle: {
       format: "esm",
     },
-  });
-  app.stack(MyStack);
+  })
+
+  if (!["prod", "stage"].includes(app.stage)) app.setDefaultRemovalPolicy("destroy")
+
+  app.stack(MyStack)
 }

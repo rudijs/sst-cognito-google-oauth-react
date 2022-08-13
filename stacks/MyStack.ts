@@ -79,7 +79,6 @@ export function MyStack({ stack, app }: StackContext) {
       VITE_APP_USER_POOL_ID: auth.userPoolId,
       VITE_APP_IDENTITY_POOL_ID: auth.cognitoIdentityPoolId as string,
       VITE_APP_USER_POOL_CLIENT_ID: auth.userPoolClientId,
-      VITE_APP_USER_POOL_CLIENT_ID2: auth.userPoolClientId,
     },
   })
 
