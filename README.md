@@ -26,10 +26,10 @@ Also configure in the Google cloud console the environment specific:
 
 ## Deploy
 
-- non prod developer stage
-- npx sst start --stage <STAGE> --profile <AWS_PROFILE>
-- prod
-- AWS_PROFILE=default npx sst start --stage prod --profile <AWS_PROFILE>
+- npx sst start --stage rudijs --profile dev
+- npx sst deploy --stage dev --profile dev
+- npx sst deploy --stage staging --profile staging
+- npx sst deploy --stage prod --profile prod
 
 ## Remove
 
@@ -40,3 +40,12 @@ AWS_PROFILE=<PROFILE> npx sst remove --stage <STAGE> --profile <AWS_PROFILE>
 Once SST is running, cd into the `frontend/`
 
 - `npm run dev`
+
+## DNS Setup
+
+Follow the instruction below.
+
+Setup a DNS NS record for the sub-domain in the AWS account for that environment (this delegates the subdomain to the AWS account.)
+
+- https://sst.dev/chapters/share-route-53-domains-across-aws-accounts.html
+- https://www.youtube.com/watch?v=YxHnpHaGcmY&t

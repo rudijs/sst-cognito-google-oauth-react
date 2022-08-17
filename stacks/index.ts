@@ -1,5 +1,6 @@
 import { MyStack } from "./MyStack"
 import { App } from "@serverless-stack/resources"
+import { DNS } from "./DNS"
 
 export default function (app: App) {
   app.setDefaultFunctionProps({
@@ -12,5 +13,5 @@ export default function (app: App) {
 
   if (!["prod", "stage"].includes(app.stage)) app.setDefaultRemovalPolicy("destroy")
 
-  app.stack(MyStack)
+  app.stack(DNS).stack(MyStack)
 }

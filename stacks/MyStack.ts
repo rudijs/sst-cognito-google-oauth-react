@@ -1,15 +1,18 @@
 import * as cognito from "aws-cdk-lib/aws-cognito"
-import { Api, Auth, StackContext, ViteStaticSite } from "@serverless-stack/resources"
+import { Api, Auth, StackContext, ViteStaticSite, use } from "@serverless-stack/resources"
+import { DNS } from "./DNS"
 
 export function MyStack({ stack, app }: StackContext) {
+  const dns = use(DNS)
+
   // Create auth
   const auth = new Auth(stack, "Auth", {
     cdk: {
       userPoolClient: {
         supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.GOOGLE],
         oAuth: {
-          callbackUrls: [app.stage === "prod" ? "signals.cryptomarketscreener.com" : "http://localhost:5173"],
-          logoutUrls: [app.stage === "prod" ? "signals.cryptomarketscreener.com" : "http://localhost:5173"],
+          callbackUrls: [["prod", "staging", "dev"].includes(app.stage) ? `https://${dns.domain}` : "http://localhost:5173"],
+          logoutUrls: [["prod", "staging", "dev"].includes(app.stage) ? `https://${dns.domain}` : "http://localhost:5173"],
         },
       },
     },
@@ -70,13 +73,17 @@ export function MyStack({ stack, app }: StackContext) {
   auth.attachPermissionsForAuthUsers(stack, [api])
 
   // Create a React Static Site
+  let customDomain: any = undefined
+  if (["prod", "staging", "dev"].includes(app.stage)) {
+    customDomain = {
+      domainName: dns.domain,
+      hostedZone: dns.zone,
+    }
+  }
+
   const site = new ViteStaticSite(stack, "Site", {
     path: "frontend",
-    // customDomain: {
-    //   domainName: app.stage === "prod" ? "signals.cryptomarketscreener.com" : "",
-    //   // domainAlias: "www.domain.com",
-    //   hostedZone: "cryptomarketscreener.com",
-    // },
+    customDomain,
 
     environment: {
       VITE_APP_COGNITO_DOMAIN: domain.domainName,

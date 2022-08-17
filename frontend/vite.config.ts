@@ -7,4 +7,9 @@ export default defineConfig({
   define: {
     global: {},
   },
+  resolve: {
+    alias: {
+      "./runtimeConfig": "./runtimeConfig.browser",
+    },
+  },
 })

@@ -3,6 +3,7 @@ import { StackContext } from "@serverless-stack/resources"
 const MAPPING: Record<string, string> = {
   production: "signals.cryptomarketscreener.com",
   staging: "staging.signals.cryptomarketscreener.com",
+  dev: "dev.signals.cryptomarketscreener.com",
 }
 
 export function DNS(props: StackContext) {

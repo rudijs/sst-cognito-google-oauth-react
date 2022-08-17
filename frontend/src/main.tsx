@@ -27,8 +27,10 @@ Amplify.configure({
     oauth: {
       domain: `${import.meta.env.VITE_APP_COGNITO_DOMAIN + ".auth." + import.meta.env.VITE_APP_REGION + ".amazoncognito.com"}`,
       scope: ["email", "profile", "openid", "aws.cognito.signin.user.admin"],
-      redirectSignIn: import.meta.env.VITE_APP_API_STAGE === "prod" ? "production-url" : "http://localhost:5173", // Make sure to use the exact URL
-      redirectSignOut: import.meta.env.VITE_APP_API_STAGE === "prod" ? "production-url" : "http://localhost:5173", // Make sure to use the exact URL
+      // redirectSignIn: import.meta.env.VITE_APP_API_STAGE === "prod" ? "production-url" : "http://localhost:5173", // Make sure to use the exact URL
+      // redirectSignOut: import.meta.env.VITE_APP_API_STAGE === "prod" ? "production-url" : "http://localhost:5173", // Make sure to use the exact URL
+      redirectSignIn: "https://dev.signals.cryptomarketscreener.com", // Make sure to use the exact URL
+      redirectSignOut: "https://dev.signals.cryptomarketscreener.com", // Make sure to use the exact URL
       responseType: "token",
     },
   },
