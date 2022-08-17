@@ -73,8 +73,10 @@ export function MyStack({ stack, app }: StackContext) {
   auth.attachPermissionsForAuthUsers(stack, [api])
 
   // Create a React Static Site
+  let redirectUrl = "http://localhost:5173"
   let customDomain: any = undefined
   if (["prod", "staging", "dev"].includes(app.stage)) {
+    redirectUrl = `https://${dns.domain}`
     customDomain = {
       domainName: dns.domain,
       hostedZone: dns.zone,
@@ -92,6 +94,7 @@ export function MyStack({ stack, app }: StackContext) {
       VITE_APP_USER_POOL_ID: auth.userPoolId,
       VITE_APP_IDENTITY_POOL_ID: auth.cognitoIdentityPoolId as string,
       VITE_APP_USER_POOL_CLIENT_ID: auth.userPoolClientId,
+      VITE_APP_REDIRECT_URL: redirectUrl,
     },
   })
 
@@ -101,5 +104,6 @@ export function MyStack({ stack, app }: StackContext) {
     authClientId: auth.userPoolClientId,
     domain: domain.domainName,
     site_url: site.url,
+    redirectUrl,
   })
 }
