@@ -13,13 +13,27 @@ GOOGLE_CLIENT_ID=<xxxxx>
 GOOGLE_CLIENT_SECRET=<xxxxxx>
 ```
 
+Google config:
+
+Client ID and client secret are from here:
+
+- https://console.cloud.google.com/apis/credentials?project=cryptomarketscreener
+
+Also configure in the Google cloud console the environment specific:
+
+1. Authorized JavaScript origins
+2. Authorized redirect URIs
+
 ## Deploy
 
-AWS_PROFILE=<PROFILE> npx sst start --stage <STAGE>
+- non prod developer stage
+- npx sst start --stage <STAGE> --profile <AWS_PROFILE>
+- prod
+- AWS_PROFILE=default npx sst start --stage prod --profile <AWS_PROFILE>
 
 ## Remove
 
-AWS_PROFILE=<PROFILE> npx sst remove --stage <STAGE>
+AWS_PROFILE=<PROFILE> npx sst remove --stage <STAGE> --profile <AWS_PROFILE>
 
 ## Usage
 

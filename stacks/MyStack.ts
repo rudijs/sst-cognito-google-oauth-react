@@ -8,8 +8,8 @@ export function MyStack({ stack, app }: StackContext) {
       userPoolClient: {
         supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.GOOGLE],
         oAuth: {
-          callbackUrls: [app.stage === "prod" ? "prodDomainNameUrl" : "http://localhost:5173"],
-          logoutUrls: [app.stage === "prod" ? "prodDomainNameUrl" : "http://localhost:5173"],
+          callbackUrls: [app.stage === "prod" ? "signals.cryptomarketscreener.com" : "http://localhost:5173"],
+          logoutUrls: [app.stage === "prod" ? "signals.cryptomarketscreener.com" : "http://localhost:5173"],
         },
       },
     },
@@ -39,7 +39,7 @@ export function MyStack({ stack, app }: StackContext) {
   // Create a cognito userpool domain
   const domain = auth.cdk.userPool.addDomain("AuthDomain", {
     cognitoDomain: {
-      domainPrefix: `${app.stage}-demo-auth-domain`,
+      domainPrefix: `${app.stage}-auth-${app.name}`,
     },
   })
 
@@ -72,6 +72,12 @@ export function MyStack({ stack, app }: StackContext) {
   // Create a React Static Site
   const site = new ViteStaticSite(stack, "Site", {
     path: "frontend",
+    // customDomain: {
+    //   domainName: app.stage === "prod" ? "signals.cryptomarketscreener.com" : "",
+    //   // domainAlias: "www.domain.com",
+    //   hostedZone: "cryptomarketscreener.com",
+    // },
+
     environment: {
       VITE_APP_COGNITO_DOMAIN: domain.domainName,
       VITE_APP_API_URL: api.url,
