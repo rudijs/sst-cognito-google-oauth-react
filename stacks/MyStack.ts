@@ -16,6 +16,9 @@ export function MyStack({ stack, app }: StackContext) {
         },
       },
     },
+    triggers: {
+      preAuthentication: "functions/preAuthentication.handler",
+    },
   })
 
   // Throw error if client ID & secret are not provided
@@ -99,6 +102,7 @@ export function MyStack({ stack, app }: StackContext) {
 
   // Show the endpoint in the output
   stack.addOutputs({
+    stage: app.stage,
     ApiEndpoint: api.url,
     authClientId: auth.userPoolClientId,
     domain: domain.domainName,
