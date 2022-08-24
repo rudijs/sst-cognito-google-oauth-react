@@ -2,5 +2,9 @@
   "hosted-zone:account=812883319101:domainName=dev.signals.cryptomarketscreener.com:region=us-east-1": {
     "Id": "/hostedzone/Z0628493TCPGMBMZLPIY",
     "Name": "dev.signals.cryptomarketscreener.com."
+  },
+  "hosted-zone:account=812883319101:domainName=dev.signals.cryptomarketscreener.com:region=ap-southeast-1": {
+    "Id": "/hostedzone/Z0628493TCPGMBMZLPIY",
+    "Name": "dev.signals.cryptomarketscreener.com."
   }
 }

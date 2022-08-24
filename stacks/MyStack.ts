@@ -72,21 +72,8 @@ export function MyStack({ stack, app }: StackContext) {
   // Allow authenticated users invoke API
   auth.attachPermissionsForAuthUsers(stack, [api])
 
-  // Create a React Static Site
-  let redirectUrl = "http://localhost:5173"
-  let customDomain: any = undefined
-  if (["prod", "staging", "dev"].includes(app.stage)) {
-    redirectUrl = `https://${dns.domain}`
-    customDomain = {
-      domainName: dns.domain,
-      hostedZone: dns.zone,
-    }
-  }
-
-  const site = new ViteStaticSite(stack, "Site", {
+  const viteStaticSiteConfig: any = {
     path: "frontend",
-    customDomain,
-
     environment: {
       VITE_APP_COGNITO_DOMAIN: domain.domainName,
       VITE_APP_API_URL: api.url,
@@ -94,9 +81,21 @@ export function MyStack({ stack, app }: StackContext) {
       VITE_APP_USER_POOL_ID: auth.userPoolId,
       VITE_APP_IDENTITY_POOL_ID: auth.cognitoIdentityPoolId as string,
       VITE_APP_USER_POOL_CLIENT_ID: auth.userPoolClientId,
-      VITE_APP_REDIRECT_URL: redirectUrl,
+      VITE_APP_REDIRECT_URL: "http://localhost:5173",
     },
-  })
+  }
+
+  // for non 'local' environments, set the DNS and redirect URL
+  if (["prod", "staging", "dev"].includes(app.stage)) {
+    viteStaticSiteConfig.customDomain = {
+      domainName: dns.domain,
+      hostedZone: dns.zone,
+    }
+    viteStaticSiteConfig.environment.VITE_APP_REDIRECT_URL = `https://${dns.domain}`
+    viteStaticSiteConfig.environment.VITE_APP_CUSTOM_DOMAIN = dns.domain
+  }
+
+  const site = new ViteStaticSite(stack, "Site", viteStaticSiteConfig)
 
   // Show the endpoint in the output
   stack.addOutputs({
@@ -104,6 +103,6 @@ export function MyStack({ stack, app }: StackContext) {
     authClientId: auth.userPoolClientId,
     domain: domain.domainName,
     site_url: site.url,
-    redirectUrl,
+    redirectUrl: viteStaticSiteConfig.environment.VITE_APP_REDIRECT_URL,
   })
 }

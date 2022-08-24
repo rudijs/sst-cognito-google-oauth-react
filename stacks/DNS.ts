@@ -10,5 +10,10 @@ export function DNS(props: StackContext) {
   const zone = MAPPING[props.app.stage] || "dev.signals.cryptomarketscreener.com"
   const domain = MAPPING[props.app.stage] || `${props.app.stage}.dev.signals.cryptomarketscreener.com`
 
+  props.stack.addOutputs({
+    zone,
+    domain,
+  })
+
   return { zone, domain }
 }

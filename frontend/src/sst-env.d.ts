@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_IDENTITY_POOL_ID: string
   readonly VITE_APP_USER_POOL_CLIENT_ID: string
   readonly VITE_APP_REDIRECT_URL: string
+  readonly VITE_APP_CUSTOM_DOMAIN: string
 }
 
 interface ImportMeta {
